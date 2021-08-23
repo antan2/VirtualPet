@@ -38,16 +38,24 @@ void draw() {
     ellipse(280 + n, 490 + 0.001*n*(n-240), 25, 25);
   }
   //snake
+  //head
+  stroke(0, 0, 0);
+  fill(100, 255, 100);
+  rect(325, snakeY -40, 100, 50, 15);
   //body  
   for(int n = 0; n < (600-snakeY); n++){
     stroke(100, 255, 100);
     line(400 - 25 - 30 * sin(n/50.0), snakeY + n, 400 + 25 - 30 * sin(n/50.0), snakeY + n);
+  stroke(0, 0, 0);
+  point(400 - 25 - 30 * sin(n/50.0), snakeY + n);
+  point(400 + 25 - 30 * sin(n/50.0), snakeY + n);
   }
   noStroke();
-  //head
-  fill(100, 255, 100);
-  rect(325, snakeY -40, 100, 50, 15);
+  //line covering
+  noStroke();
+  rect(327, snakeY -38, 96, 48, 15);
   //eyes
+  stroke(0, 0, 0);
   fill(255, 255, 255);
   rect(385, snakeY -50, 15, 30, 25);
   rect(395, snakeY -50, 15, 30, 25);
@@ -58,6 +66,7 @@ void draw() {
   fill(255, 255, 255);
   triangle(335, snakeY + 10, 340, snakeY +10, 337.5, snakeY + 25);
   triangle(340, snakeY + 10, 345, snakeY +10, 342.5, snakeY + 25); 
+  noStroke();
   //basket base
   for(int n = 0; n<75; n++){
     fill(150 + 1.5*n, 100 + n, 75+n/2);
@@ -93,6 +102,7 @@ void draw() {
    rise = true;
   }
 }
+
 
 
 
