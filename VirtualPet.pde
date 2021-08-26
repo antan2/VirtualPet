@@ -105,6 +105,14 @@ void draw() {
       ellipse(280 + n - m/2, 490 - 0.001*n*(n-240) - m/2, 25 - m, 25 - m);
     }
   }
+  //feeble attempt at making the last part "3-D"
+  for(int m = 0; m<= 5; m++){
+    fill(125 + 5 * m, 80 + 4 * m, 20 + 3 * m);
+    ellipse(520 - m, 490 - m, 25 - 2.5*m, 25 - 2.5*m);
+  }
+  fill(175, 120, 50);
+  ellipse(510, 483, 9, 9);
+  
   //decal
   for(int n = 0; n < 20; n++){
     fill(100, 50, 0, 100);
