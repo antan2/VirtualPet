@@ -1,15 +1,17 @@
-/*
-//if the arduino light sensor is in use :)
-import processing.serial.*;
-import cc.arduino.*;
-Arduino arduino;
-*/
+  /*
+  //If arduino is used :)
+  import processing.serial.*;
+  import cc.arduino.*;
+  Arduino arduino;
+  */
   //var
   boolean arduMode = false;
   float snakeY = 500;
   float t = 0;
   float riseLimit;
   boolean rise = true;
+  float mX = 400;
+  float mY = 400;
  
 void setup() {
   size(800, 800);
@@ -58,6 +60,9 @@ void draw() {
   for(int n = 0; n <= 240; n++){
     ellipse(280 + n, 490 + 0.001*n*(n-240), 25, 25);
   }
+  //shadow
+  fill(75, 75, 75, 200);
+  ellipse(450, 725, 200, 50);
   //snake
   //head
   stroke(0, 0, 0);
@@ -110,6 +115,19 @@ void draw() {
       triangle(252.5 + 15*n, 597 - 0.3*n*(n-20), 262.5 + 15*n, 597 - 0.3*n*(n-20), 257.5 + 15*n, 603 - 0.3*n*(n-20));
     }
   }
+  //music
+  if(rise == true){
+    fill(0, 0, 0);
+    ellipse(mX - 25, mY, 20, 20);
+    ellipse(mX + 25, mY, 20, 20);
+    stroke(0, 0, 0);
+    strokeWeight(2);
+    line(mX -16, mY, mX - 16, mY - 50);
+    line(mX + 34, mY, mX + 34, mY - 50);
+    strokeWeight(1);
+    noStroke();
+    rect(mX - 16, mY - 51, 50, 10);
+  }
   //move
   if(arduMode == true){
   if(rise == true){
@@ -135,14 +153,21 @@ void draw() {
     else {
       rise = false;
     }
-  } else if(snakeY <= 600){
-   snakeY +=5; 
+  } else if(snakeY <= 550){
+   snakeY +=10; 
   }
   else{
-   snakeY = 600; 
+   snakeY = 550; 
    rise = true;
   }
   }
+   if(mX <= 830){
+      mX += 3;
+      mY = 300-25*cos(mX/20.0);
+    }
+    else{
+     mX = -50; 
+    } 
 }
 
 
