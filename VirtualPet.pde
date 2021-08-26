@@ -1,17 +1,38 @@
-//var
-float snakeY = 500;
-float t = 0;
-boolean rise = true;
-float riseLimit = 300;
-
+/*
+//if the arduino light sensor is in use :)
+import processing.serial.*;
+import cc.arduino.*;
+Arduino arduino;
+*/
+  //var
+  boolean arduMode = false;
+  float snakeY = 500;
+  float t = 0;
+  float riseLimit;
+  boolean rise = true;
+ 
 void setup() {
   size(800, 800);
+  if (arduMode == true){
+    arduino = new Arduino(this, Arduino.list()[0], 57600); //change the [0] to a [1] or [2] etc. if your program doesn't work
+  }
   noStroke();  
 }
-
 void draw() {
+  //Troubleshooting console
+  /*
+  System.out.print(arduino.analogRead(5));
+  System.out.print(" + ");
+  System.out.println(riseLimit);
+  */
+  if(arduMode == true){
+    riseLimit = 600 - 1.5 * arduino.analogRead(5);
+  }
+  else{
+    riseLimit = 300;
+  }
   t++;
-  background(200, 200, 200);
+  background(225, 225, 225);
   fill(150, 150, 150);
   rect(0,575,800, 225);
   //backdrop
@@ -72,9 +93,12 @@ void draw() {
     fill(150 + 1.5*n, 100 + n, 75+n/2);
     arc(400-n, 600-n, 300-3*n, 300-3*n, 0-QUARTER_PI, PI+QUARTER_PI, CHORD);
   }
-  fill(175, 140, 50);
+  //rim
   for(int n = 0; n <= 240; n++){
-    ellipse(280 + n, 490 - 0.001*n*(n-240), 25, 25);
+    for(int m = 0; m<= 10; m++){
+      fill(125 + 5 * m, 80 + 4 * m, 20 + 3 * m);
+      ellipse(280 + n - m/2, 490 - 0.001*n*(n-240) - m/2, 25 - m, 25 - m);
+    }
   }
   //decal
   for(int n = 0; n < 20; n++){
@@ -87,7 +111,24 @@ void draw() {
     }
   }
   //move
+  if(arduMode == true){
   if(rise == true){
+    if(snakeY >= riseLimit){
+      snakeY --;
+    }
+    else {
+      rise = false;
+    }
+  } else if(snakeY <= riseLimit){
+   snakeY +=5; 
+  }
+  else{
+   snakeY = riseLimit; 
+   rise = true;
+  }
+  }
+  else{
+    if(rise == true){
     if(snakeY >= riseLimit){
       snakeY --;
     }
@@ -101,7 +142,14 @@ void draw() {
    snakeY = 600; 
    rise = true;
   }
+  }
 }
+
+
+
+
+
+
 
 
 
